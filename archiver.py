@@ -19,9 +19,8 @@ CONFIG_FILE = os.path.join(ROOT_PATH, '_config.yml')
 POSTS_FOLDER = os.path.join(ROOT_PATH, '_posts')
 MEDIA_FOLDER = os.path.join(ROOT_PATH, 'media')
 
-IG_USERNAME = "diptanil_"
-IG_USERID = "34163152085"
-
+IG_USERNAME = "<YOUR-INSTAGRAM-USERNAME>" # Change and add your Instagram Account
+IG_USERID = "<YOUR-INSTAGRAM-USER-PK>" # Add your Instagram PK, if can't set it to None i.e. IG_USERID = None
 
 class Instagram:
     def __init__(self) -> None:
@@ -301,8 +300,10 @@ class Post:
 
         if not self.download_media():
             return False
+        
+        content = self.caption.replace("\n", "  \n")
 
-        fm_post = frontmatter.Post(self.caption)
+        fm_post = frontmatter.Post(content)
         self.archive_date = datetime.date.today()
 
         fm_post['layout'] = 'post'
@@ -356,12 +357,12 @@ def main():
     print("Instagram Posts Archiver")
     print("========================")
 
-    print(f"\nInstagram Archive Account Username: {IG_USERNAME}")
-    print(f"Instagram Archive Account UserId: {IG_USERID}")
-
     print("\nLogging In to Instagram Account")
     ig = Instagram()
     ig_posts = ig.media_in_posts_format()
+
+    print(f"\nInstagram Archive Account Username: {IG_USERNAME}")
+    print(f"Instagram Archive Account UserId: {IG_USERID}")
 
     print(f"Total Post Count on Instagram: {len(ig_posts)}")
 
